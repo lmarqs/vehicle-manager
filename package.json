@@ -1,0 +1,19 @@
+{
+  "name": "vehicle-manager",
+  "version": "1.0.0",
+  "description": "A simple CRUD app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmarqs/vehicle-manager.git"
+  },
+  "author": "lmarqs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lmarqs/vehicle-manager/issues"
+  },
+  "homepage": "https://github.com/lmarqs/vehicle-manager#readme"
+}
