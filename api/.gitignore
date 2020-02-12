@@ -1,0 +1,9 @@
+# IDE
+.vscode
+
+# dependencies
+node_modules
+
+# build
+lib
+package-lock.json

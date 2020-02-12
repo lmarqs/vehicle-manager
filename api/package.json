@@ -1,0 +1,26 @@
+{
+  "name": "@vehicle-manager/api",
+  "version": "1.0.0",
+  "description": "API for Vehicle Manager project",
+  "license": "UNLICENSED",
+  "author": "lmarqs",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "prebuild": "rm -rf lib",
+    "build": "tsc",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tslint": "^5.20.0",
+    "typescript": "^3.7.4"
+  },
+  "engines": {
+    "node": "10"
+  },
+  "private": true
+}
