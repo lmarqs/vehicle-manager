@@ -1,21 +1,21 @@
-import { Model } from "@vehicle-manager/api";
+import { Model, PersistedModel } from "@vehicle-manager/api";
 
 export abstract class BaseCrudService<T extends Model> {
-  public abstract async create(entity: T): Promise<T>;
+  public abstract async create(entity: T): Promise<T & Required<Pick<T, "_id">>>;
 
-  public abstract async read(id: number): Promise<T | null>;
+  public abstract async read(_id: PersistedModel<T>["_id"]): Promise<T | null>;
 
   public abstract async find(args: any): Promise<any>;
 
-  public abstract async update(id: number, entity: T): Promise<T>;
+  public abstract async update(id: PersistedModel<T>["_id"], entity: T): Promise<T>;
 
-  public abstract async delete(id: number): Promise<T>;
+  public abstract async delete(id: PersistedModel<T>["_id"]): Promise<T>;
 
   protected async beforeCreate(data: T): Promise<T> {
     return data;
   }
 
-  protected async afterCreate(entity: T): Promise<T> {
+  protected async afterCreate(entity: PersistedModel<T>): Promise<PersistedModel<T>> {
     return entity;
   }
 
