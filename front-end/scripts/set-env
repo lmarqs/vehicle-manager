@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+const { spawnSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+
+const dir = process.cwd();
+
+const env = ['prod', 'staging', 'dev', 'test'].find(it => process.argv.includes(it)) || 'dev';
+
+makeSymbolicLink(path.join(dir, 'env', `env.${env}.js`), path.join(dir, 'env', 'index.js'));
+
+function makeSymbolicLink(src, dst) {
+  spawnSync('rm', ['-rf', dst]);
+  fs.symlinkSync(src, dst);
+}
