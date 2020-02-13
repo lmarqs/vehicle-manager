@@ -9,7 +9,7 @@ export enum VehicleType {
 }
 
 export interface AbstractVehicle extends Model {
-  chassisNumber?: string;
+  chassisNumber?: number;
   chassisSeries?: string;
   numberOfPassengers?: number;
   type?: VehicleType;
