@@ -1,4 +1,4 @@
-import { AbstractVehicle, VEHICLE } from "@vehicle-manager/api";
+import { AbstractVehicle, VEHICLE, VehicleType } from "@vehicle-manager/api";
 
 import { DatabaseCrudService } from "./database-service";
 import { createDatabase } from "./utils";
@@ -24,9 +24,6 @@ export const VehicleConstraints: ModelConstraits<AbstractVehicle> = {
       onlyInteger: true,
       greaterThanOrEqualTo: 0,
     },
-  },
-  type: {
-    presence: true,
   },
   numberOfPassengers: {
     presence: true,
@@ -54,7 +51,17 @@ class VehicleService extends DatabaseCrudService<AbstractVehicle> {
       throw new ValidationError({ chassisId: "Already exists" });
     }
 
-    return data;
+    switch (data.type) {
+      case VehicleType.TRUCK:
+        return { ...data, numberOfPassengers: 1 };
+      case VehicleType.BUS:
+        return { ...data, numberOfPassengers: 42 };
+      case VehicleType.CAR:
+        return { ...data, numberOfPassengers: 4 };
+      default:
+        throw new ValidationError({ type: "Type unknown" });
+    }
+
   }
 
   protected async beforeUpdate(before: AbstractVehicle, { color, ...data }: AbstractVehicle) {

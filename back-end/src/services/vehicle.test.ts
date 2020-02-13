@@ -21,6 +21,24 @@ describe("Vehicle creation", () => {
     await expect(vehicleService.create(vehicle)).rejects.toThrowError();
   });
 
+  it("trucks must have numberOfPassengers = 1", async () => {
+    vehicle = { ...vehicle, type: VehicleType.TRUCK };
+    vehicle = await vehicleService.create(vehicle);
+    expect(vehicle.numberOfPassengers).toBe(1);
+  });
+
+  it("buses must have numberOfPassengers = 42", async () => {
+    vehicle = { ...vehicle, type: VehicleType.BUS };
+    vehicle = await vehicleService.create(vehicle);
+    expect(vehicle.numberOfPassengers).toBe(42);
+  });
+
+  it("cars must have numberOfPassengers = 4", async () => {
+    vehicle = { ...vehicle, type: VehicleType.CAR };
+    vehicle = await vehicleService.create(vehicle);
+    expect(vehicle.numberOfPassengers).toBe(4);
+  });
+
   it("vehicle must have a valid chassisSeries", async () => {
     await expect(vehicleService.create({ ...vehicle, chassisSeries: undefined }))
       .rejects.toThrowError(ValidationError);
