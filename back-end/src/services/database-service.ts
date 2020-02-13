@@ -38,12 +38,12 @@ export abstract class DatabaseCrudService<T extends Model> extends BaseCrudServi
     });
   }
 
-  public async find(query: any): ReturnType<BaseCrudService<T>["find"]> {
+  public async find(query: any): Promise<Array<PersistedModel<T>>> {
 
     return new Promise((resolve) => {
 
       this.db.find(query, (err, docs) => {
-        resolve(docs);
+        resolve(docs as Array<PersistedModel<T>>);
       });
 
     });
