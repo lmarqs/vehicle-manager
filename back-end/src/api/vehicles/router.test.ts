@@ -3,7 +3,7 @@ import faker from "faker";
 import HttpStatus from "http-status-codes";
 import request from "supertest";
 
-import { app } from "../../server";
+import { app } from "../../index";
 
 let vehicle: Vehicle;
 

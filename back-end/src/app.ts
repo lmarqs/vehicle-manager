@@ -3,7 +3,7 @@ import express from "express";
 import * as middlewares from "./middlewares";
 import { router } from "./router";
 
-export function createApp(port: number = 3000) {
+export function createApp() {
   const app = express();
 
   app.use(middlewares.logger);
@@ -11,8 +11,6 @@ export function createApp(port: number = 3000) {
 
   app.use(router);
   app.use(middlewares.errorHandler);
-
-  app.listen(port);
 
   return app;
 }

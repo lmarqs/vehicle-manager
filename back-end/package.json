@@ -8,7 +8,7 @@
     "lint": "tslint --project tsconfig.json --format verbose 'src/**/*.ts'",
     "set-env": "node ./scripts/set-env",
     "prestart": "npm run build",
-    "start": "nodemon dist",
+    "start": "node dist",
     "pretest": "npm run set-env test",
     "test": "jest --coverage",
     "test:watch": "npm run test -- --watchAll"
