@@ -20,6 +20,6 @@ export function createDatabase<T extends Model>(name: string) {
   return new Database<T>({
     autoload: true,
     filename: path.join(os.homedir(), ".vehicle-manager", env.NODE_ENV, "db", `${name}.db`),
-    inMemoryOnly: env.NODE_ENV === "test",
+    // inMemoryOnly: env.NODE_ENV === "test",
   });
 }

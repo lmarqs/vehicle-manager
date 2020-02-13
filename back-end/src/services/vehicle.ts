@@ -6,10 +6,6 @@ import { ModelConstraits, validate, ValidationError } from "./validation";
 
 const db = createDatabase<AbstractVehicle>(VEHICLE);
 
-db.ensureIndex({
-  fieldName: "chassisNumber",
-});
-
 export const VehicleConstraints: ModelConstraits<AbstractVehicle> = {
   chassisSeries: {
     presence: true,
@@ -19,13 +15,6 @@ export const VehicleConstraints: ModelConstraits<AbstractVehicle> = {
     },
   },
   chassisNumber: {
-    presence: true,
-    numericality: {
-      onlyInteger: true,
-      greaterThanOrEqualTo: 0,
-    },
-  },
-  numberOfPassengers: {
     presence: true,
     numericality: {
       onlyInteger: true,

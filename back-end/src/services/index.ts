@@ -1,3 +1,3 @@
 export { vehicleService } from "./vehicle";
 export { ValidationError } from "./validation";
-export { EntityNotFoundError } from "./service";
+export { BaseCrudService, EntityNotFoundError } from "./service";
