@@ -222,9 +222,9 @@ describe("delete", () => {
 function createFakeModel(): FakeModel {
   return {
     alphaNumeric: faker.random.alphaNumeric(),
-    number: faker.random.number(),
-    boolean: faker.random.boolean(),
-    object: faker.random.objectElement(),
     array: [faker.random.arrayElement()],
+    boolean: faker.random.boolean(),
+    number: faker.random.number(),
+    object: faker.random.objectElement(),
   };
 }

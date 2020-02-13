@@ -8,7 +8,9 @@ export abstract class DatabaseCrudService<T extends Model> extends BaseCrudServi
     super();
   }
 
-  public async create(...[rawData]: Parameters<BaseCrudService<T>["create"]>): ReturnType<BaseCrudService<T>["create"]> {
+  public async create(...[rawData]: Parameters<BaseCrudService<T>["create"]>):
+    ReturnType<BaseCrudService<T>["create"]> {
+
     const data = await this.beforeCreate(rawData);
 
     return new Promise((resolve, reject) => {
@@ -22,10 +24,10 @@ export abstract class DatabaseCrudService<T extends Model> extends BaseCrudServi
     });
   }
 
-  public async read(...[_id]: Parameters<BaseCrudService<T>["read"]>): ReturnType<BaseCrudService<T>["read"]> {
+  public async read(...[id]: Parameters<BaseCrudService<T>["read"]>): ReturnType<BaseCrudService<T>["read"]> {
     return new Promise((resolve, reject) => {
 
-      this.db.findOne({ _id }, async (err, doc) => {
+      this.db.findOne({ _id: id }, async (err, doc) => {
         if (!doc) {
           reject(new EntityNotFoundError());
         }
@@ -47,14 +49,14 @@ export abstract class DatabaseCrudService<T extends Model> extends BaseCrudServi
     });
   }
 
-  public async update(...[_id, rawData]: Parameters<BaseCrudService<T>["update"]>): ReturnType<BaseCrudService<T>["update"]> {
-    const before = await this.read(_id);
+  public async update(...[id, rawData]: Parameters<BaseCrudService<T>["update"]>): ReturnType<BaseCrudService<T>["update"]> {
+    const before = await this.read(id);
 
     const data = await this.beforeUpdate(before, rawData);
 
     return new Promise((resolve, reject) => {
 
-      this.db.update({ _id }, data, {}, async (err) => {
+      this.db.update({ _id: id }, data, {}, async (err) => {
         this.afterUpdate(before, data);
         resolve({ ...before, ...data });
       });
@@ -63,14 +65,14 @@ export abstract class DatabaseCrudService<T extends Model> extends BaseCrudServi
 
   }
 
-  public async delete(...[_id]: Parameters<BaseCrudService<T>["delete"]>): ReturnType<BaseCrudService<T>["delete"]> {
-    const entity = await this.read(_id);
+  public async delete(...[id]: Parameters<BaseCrudService<T>["delete"]>): ReturnType<BaseCrudService<T>["delete"]> {
+    const entity = await this.read(id);
 
     await this.beforeDelete(entity);
 
     return new Promise(async (resolve, reject) => {
 
-      this.db.remove({ _id }, {}, async (err) => {
+      this.db.remove({ _id: id }, {}, async (err) => {
         await this.afterDelete(entity);
         resolve(entity);
       });
