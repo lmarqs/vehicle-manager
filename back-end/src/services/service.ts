@@ -3,7 +3,7 @@ import { Model, PersistedModel } from "@vehicle-manager/api";
 export abstract class BaseCrudService<T extends Model> {
   public abstract async create(entity: T): Promise<T & Required<Pick<T, "_id">>>;
 
-  public abstract async read(_id: PersistedModel<T>["_id"]): Promise<PersistedModel<T>>;
+  public abstract async read(id: PersistedModel<T>["_id"]): Promise<PersistedModel<T>>;
 
   public abstract async find(args: any): Promise<any>;
 
