@@ -25,6 +25,16 @@ export const VehicleConstraints: ModelConstraits<AbstractVehicle> = {
       greaterThanOrEqualTo: 0,
     },
   },
+  type: {
+    presence: true,
+  },
+  numberOfPassengers: {
+    presence: true,
+    numericality: {
+      onlyInteger: true,
+      greaterThanOrEqualTo: 0,
+    },
+  },
 };
 
 class VehicleService extends DatabaseCrudService<AbstractVehicle> {

@@ -16,7 +16,7 @@ describe("Vehicle creation", () => {
     expect(vehicle).toBeTruthy();
   });
 
-  it("chassisId is unique", async () => {
+  it("chassisId must be unique", async () => {
     await vehicleService.create(vehicle);
     await expect(vehicleService.create(vehicle)).rejects.toThrowError();
   });
@@ -43,11 +43,62 @@ describe("Vehicle creation", () => {
       .rejects.toThrowError(ValidationError);
 
   });
+
+  it("vehicle must have a valid type", async () => {
+    await expect(vehicleService.create({ ...vehicle, type: undefined }))
+      .rejects.toThrowError(ValidationError);
+  });
+
+  it("vehicle must have a valid numberOfPassengers", async () => {
+    await expect(vehicleService.create({ ...vehicle, numberOfPassengers: undefined }))
+      .rejects.toThrowError(ValidationError);
+
+    await expect(vehicleService.create({ ...vehicle, numberOfPassengers: 0.1 }))
+      .rejects.toThrowError(ValidationError);
+
+    await expect(vehicleService.create({ ...vehicle, numberOfPassengers: -1 }))
+      .rejects.toThrowError(ValidationError);
+
+  });
+});
+
+describe("Vehicle update", () => {
+  it("only color can be updated", async () => {
+    const { _id } = await vehicleService.create({ ...vehicle, type: VehicleType.BUS });
+
+    const chassisNumber = vehicle.chassisNumber ?? 0 - 1;
+
+    await expect(vehicleService.update(_id, { chassisNumber }))
+      .rejects.toThrowError(ValidationError);
+
+    const chassisSeries = `${vehicle.chassisSeries}${vehicle.chassisSeries}`;
+
+    await expect(vehicleService.update(_id, { chassisSeries }))
+      .rejects.toThrowError(ValidationError);
+
+    const type = VehicleType.CAR;
+
+    await expect(vehicleService.update(_id, { type }))
+      .rejects.toThrowError(ValidationError);
+
+    const numberOfPassengers = vehicle.numberOfPassengers ?? 0 + 1;
+
+    await expect(vehicleService.update(_id, { numberOfPassengers }))
+      .rejects.toThrowError(ValidationError);
+
+    const color = `${vehicle.color}${faker.random.alphaNumeric()}`;
+
+    vehicle = await vehicleService.update(_id, { color });
+
+    expect(vehicle.color).toBe(color);
+  });
 });
 
 function createValidVehicle(): AbstractVehicle {
   return {
     chassisSeries: faker.random.uuid(),
     chassisNumber: faker.random.number(),
+    type: VehicleType.BUS,
+    numberOfPassengers: faker.random.number(),
   };
 }
