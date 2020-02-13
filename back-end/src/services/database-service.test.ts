@@ -2,8 +2,8 @@ import { Model, PersistedModel } from "@vehicle-manager/api";
 import faker from "faker";
 
 import { DatabaseCrudService } from "./database-service";
-import { createDatabase } from "./utils";
 import { EntityNotFoundError } from "./service";
+import { createDatabase } from "./utils";
 
 const FAKE_MODEL = "FAKE_MODEL";
 
@@ -55,8 +55,8 @@ beforeEach(() => {
   service = new FakeService();
 });
 
-describe('create', () => {
-  it('can create an entity with success', async () => {
+describe("create", () => {
+  it("can create an entity with success", async () => {
     const data = createFakeModel();
 
     const created = await service.create(data);
@@ -65,7 +65,7 @@ describe('create', () => {
     expect(created).toMatchObject({ _id: created._id, ...data });
   });
 
-  it('beforeCreate hook is called and can change data', async () => {
+  it("beforeCreate hook is called and can change data", async () => {
     const hook = service.beforeCreate.bind(service);
 
     const wrappedHook = jest.fn((data) => {
@@ -80,7 +80,7 @@ describe('create', () => {
     expect(created.beforeCreate).toBeTruthy();
   });
 
-  it('afterCreate hook is called', async () => {
+  it("afterCreate hook is called", async () => {
     const hook = service.afterCreate.bind(service);
 
     const wrappedHook = jest.fn((data) => {
@@ -95,21 +95,21 @@ describe('create', () => {
   });
 });
 
-describe('read', () => {
-  it('can read an entity with success', async () => {
+describe("read", () => {
+  it("can read an entity with success", async () => {
     const created = await service.create(createFakeModel());
     const readed = await service.read(created._id);
 
     expect(created).toStrictEqual(readed);
   });
 
-  it('reading a non existing entity throws EntityNotFoundError', async () => {
+  it("reading a non existing entity throws EntityNotFoundError", async () => {
     await expect(service.read("")).rejects.toThrowError(EntityNotFoundError);
   });
 });
 
-describe('find', () => {
-  it('can find entities with success', async () => {
+describe("find", () => {
+  it("can find entities with success", async () => {
     const sorter = (a: PersistedModel<FakeModel>, b: PersistedModel<FakeModel>) => a._id > b._id ? 1 : -1;
     const data = createFakeModel();
 
@@ -127,8 +127,8 @@ describe('find', () => {
   });
 });
 
-describe('update', () => {
-  it('can update an entity with success', async () => {
+describe("update", () => {
+  it("can update an entity with success", async () => {
     const created = await service.create({ ...createFakeModel(), alphaNumeric: "" });
 
     expect(created.alphaNumeric).toBeFalsy();
@@ -140,7 +140,7 @@ describe('update', () => {
     expect(updated).toStrictEqual({ ...created, alphaNumeric });
   });
 
-  it('beforeUpdate hook is called and can change data', async () => {
+  it("beforeUpdate hook is called and can change data", async () => {
     const hook = service.beforeUpdate.bind(service);
 
     const wrappedHook = jest.fn((before, data) => {
@@ -156,7 +156,7 @@ describe('update', () => {
     expect(updated.beforeUpdate).toBeTruthy();
   });
 
-  it('afterUpdate hook is called', async () => {
+  it("afterUpdate hook is called", async () => {
     const hook = service.afterUpdate.bind(service);
 
     const wrappedHook = jest.fn((before, data) => {
@@ -171,20 +171,20 @@ describe('update', () => {
     expect(wrappedHook.mock.calls.length).toBe(1);
   });
 
-  it('updating a non existing entity throws error', async () => {
+  it("updating a non existing entity throws error", async () => {
     await expect(service.update("", createFakeModel())).rejects.toThrowError();
   });
 });
 
-describe('delete', () => {
-  it('can delete an entity with success', async () => {
+describe("delete", () => {
+  it("can delete an entity with success", async () => {
     const created = await service.create(createFakeModel());
     const deleted = await service.delete(created._id);
 
     expect(created).toStrictEqual(deleted);
   });
 
-  it('beforeDelete hook is called', async () => {
+  it("beforeDelete hook is called", async () => {
     const hook = service.beforeDelete.bind(service);
 
     const wrappedHook = jest.fn((entity) => {
@@ -199,7 +199,7 @@ describe('delete', () => {
     expect(wrappedHook.mock.calls.length).toBe(1);
   });
 
-  it('afterDelete hook is called', async () => {
+  it("afterDelete hook is called", async () => {
     const hook = service.afterDelete.bind(service);
 
     const wrappedHook = jest.fn((entity) => {
@@ -214,7 +214,7 @@ describe('delete', () => {
     expect(wrappedHook.mock.calls.length).toBe(1);
   });
 
-  it('deleting a non existing entity throws EntityNotFoundError', async () => {
+  it("deleting a non existing entity throws EntityNotFoundError", async () => {
     await expect(service.delete("")).rejects.toThrowError(EntityNotFoundError);
   });
 });

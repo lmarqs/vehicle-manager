@@ -1,8 +1,7 @@
 import { Model, PersistedModel } from "@vehicle-manager/api";
 
-import { BaseCrudService, EntityNotFoundError } from "./service";
 import Database from "nedb";
-
+import { BaseCrudService, EntityNotFoundError } from "./service";
 
 export abstract class DatabaseCrudService<T extends Model> extends BaseCrudService<T> {
   constructor(private db: Database<T>) {

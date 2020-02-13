@@ -1,6 +1,6 @@
 import Database from "nedb";
-import path from "path";
 import os from "os";
+import path from "path";
 
 import { Model } from "@vehicle-manager/api";
 
@@ -11,7 +11,7 @@ export function createDatabase<T extends Model>(name: string) {
     throw new Error(`Database name can not be empty`);
   }
 
-  const invalidChars = name.replace(/[a-zA-Z0-9-_]/g, '');
+  const invalidChars = name.replace(/[a-zA-Z0-9-_]/g, "");
 
   if (invalidChars) {
     throw new Error(`Can not create database with name "${name}". Encountered invalid chars "${invalidChars}"`);
