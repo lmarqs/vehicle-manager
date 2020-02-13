@@ -12,7 +12,13 @@ beforeEach(() => {
 
 describe("Vehicle creation", () => {
   it("can create a valid vehicle", async () => {
-    await expect(vehicleService.create(vehicle)).resolves.toBeTruthy();
+    vehicle = await vehicleService.create(vehicle);
+    expect(vehicle).toBeTruthy();
+  });
+
+  it("chassisId is unique", async () => {
+    await vehicleService.create(vehicle);
+    await expect(vehicleService.create(vehicle)).rejects.toThrowError();
   });
 
   it("vehicle must have a valid chassisSeries", async () => {
