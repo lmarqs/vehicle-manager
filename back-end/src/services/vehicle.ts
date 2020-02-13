@@ -7,8 +7,7 @@ import { ModelConstraits, validate, ValidationError } from "./validation";
 const db = createDatabase<AbstractVehicle>(VEHICLE);
 
 db.ensureIndex({
-  fieldName: "_chassisId",
-  unique: true,
+  fieldName: "chassisNumber",
 });
 
 export const VehicleConstraints: ModelConstraits<AbstractVehicle> = {
@@ -34,7 +33,17 @@ class VehicleService extends DatabaseCrudService<AbstractVehicle> {
   }
 
   protected async beforeCreate(data: AbstractVehicle) {
-    validate(data, VehicleConstraints);
+    await validate(data, VehicleConstraints);
+
+    const vehiclesWithTheSameChassisId = await this.find({
+      chassisSeries: data.chassisSeries,
+      chassisNumber: data.chassisNumber,
+    });
+
+    if (vehiclesWithTheSameChassisId.length) {
+      throw new ValidationError({ chassisId: "Already exists" });
+    }
+
     return data;
   }
 
@@ -51,7 +60,7 @@ class VehicleService extends DatabaseCrudService<AbstractVehicle> {
 
     const vehicle = { ...before, color };
 
-    validate(vehicle, VehicleConstraints);
+    await validate(vehicle, VehicleConstraints);
 
     return vehicle;
   }
