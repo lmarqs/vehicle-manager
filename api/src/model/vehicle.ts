@@ -13,6 +13,7 @@ export interface AbstractVehicle extends Model {
   chassisSeries?: string;
   numberOfPassengers?: number;
   type?: VehicleType;
+  color?: string;
 }
 
 export interface Bus extends AbstractVehicle {
