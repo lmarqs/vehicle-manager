@@ -4,6 +4,7 @@
   "description": "Front end for vehicle-manager project",
   "main": "dist/index.js",
   "scripts": {
+    "prebuild": "rimraf dist",
     "build": "tsc",
     "lint": "tslint --project tsconfig.json --format verbose 'src/**/*.ts'",
     "set-env": "node ./scripts/set-env",
@@ -44,6 +45,7 @@
     "@types/supertest": "^2.0.8",
     "faker": "^4.1.0",
     "jest": "^25.1.0",
+    "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
     "ts-jest": "^25.2.0",
     "tslint": "^5.20.1",
