@@ -22,7 +22,13 @@ export class App extends React.Component {
               </ul>
               <form action="/" method="get" className="navbar-form navbar-left" role="search">
                 <div className="form-group">
-                  <input className="form-control" name="q" defaultValue={q ?? ""} placeholder="Search" autoComplete="off" />
+                  <input 
+                    autoComplete="off"
+                    className="form-control"
+                    defaultValue={q ?? ""}
+                    name="q"
+                    placeholder="Chassis Number"
+                  />
                 </div>
                 <button type="submit" className="btn btn-default">Search</button>
               </form>
