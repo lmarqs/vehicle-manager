@@ -6,6 +6,7 @@ import { router } from "./router";
 export function createApp() {
   const app = express();
 
+  app.use(middlewares.allowCors);
   app.use(middlewares.logger);
   app.use(middlewares.securityChecking);
 

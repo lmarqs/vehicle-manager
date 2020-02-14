@@ -1,16 +1,10 @@
 import { customElement, html, LitElement, property } from "lit-element";
+import { ComponentPropsWithRef, FunctionComponent } from "react";
 
 @customElement("vm-alert")
-export class Label extends LitElement {
-
-  private get $input() {
-    return this.shadowRoot!.getElementById("input")! as HTMLInputElement;
-  }
+export class Alert extends LitElement {
   @property({ type: String })
   private type = "alert-info";
-
-  @property({ type: String })
-  private message = "";
 
   public render() {
     return html`
@@ -18,7 +12,7 @@ export class Label extends LitElement {
         <button type="button" class="close" aria-label="Close" @click="${this.handleDismiss}">
           <span aria-hidden="true">&nbsp;&times;</span>
         </button>
-        ${this.message}
+        <slot></slot>
       </div>
     `;
   }
@@ -34,5 +28,13 @@ export class Label extends LitElement {
   private handleDismiss = (e: any) => {
     const event = new Event("dismiss");
     this.dispatchEvent(event);
+  }
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "vm-alert": any;
+    }
   }
 }

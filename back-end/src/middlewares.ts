@@ -1,3 +1,4 @@
+import cors from "cors";
 import { ErrorRequestHandler } from "express";
 import helmet from "helmet";
 import HttpStatus from "http-status-codes";
@@ -8,6 +9,8 @@ import { EntityNotFoundError, ValidationError } from "./services";
 export const logger = morgan("combined");
 
 export const securityChecking = helmet();
+
+export const allowCors = cors();
 
 export const errorHandler: ErrorRequestHandler = async (err, req, res, next) => {
   const status =

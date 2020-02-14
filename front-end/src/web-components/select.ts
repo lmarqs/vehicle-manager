@@ -1,11 +1,8 @@
 
 import { customElement, html, LitElement, property } from "lit-element";
 
-@customElement("vm-input")
-export class Input extends LitElement {
-  @property()
-  private type = "";
-
+@customElement("vm-select")
+export class Select extends LitElement {
   @property()
   private label = "";
 
@@ -25,14 +22,14 @@ export class Input extends LitElement {
     return html`
     <div class="${this.wrapperClass}">
       <label class="control-label">${this.label}</label>
-      <input
-        .type="${this.type}"
+      <select
         @input="${this.handleChange}"
         @change="${this.handleChange}"
         .value="${this.value}"
         ?readonly="${this.readonly}"
         class="form-control"
       >
+      </select>
       ${this.hasError && this.error && (
         html`<p className="help-block">${this.error}</p>`
       )}
@@ -58,7 +55,7 @@ export class Input extends LitElement {
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "vm-input": any;
+      "vm-select": any;
     }
   }
 }
