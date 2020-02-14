@@ -12,7 +12,7 @@ export function RestRouter<T extends Model>(service: BaseCrudService<T>) {
     .route("/:id")
     .get(async (req, res, next) => {
       try {
-        const model = await service.delete(req.params.id);
+        const model = await service.read(req.params.id);
         res.status(HttpStatus.OK).send(model);
       } catch (e) {
         next(e);
