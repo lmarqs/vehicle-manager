@@ -4,13 +4,16 @@
   "description": "Front end for vehicle-manager project",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "lint": "tslint --project tsconfig.json --format verbose 'src/**/*.ts'",
-    "set-env": "node ./scripts/set-env",
-    "prestart": "npm run build",
-    "start": "node dist",
+    "prebuild": "rm -rf dist",
+    "build": "parcel build src/index.html --out-dir dist --public-url ./",
+    "eject": "react-scripts eject",
+    "lint": "npm run lint:ts && npm run lint:css",
+    "lint:ts": "tslint --project tsconfig.json --format verbose 'src/**/*.ts'",
+    "lint:css": "stylelint src",
     "pretest": "npm run set-env test",
-    "test": "jest --coverage",
+    "set-env": "node ./scripts/set-env",
+    "start": "parcel src/index.html",
+    "test": "react-scripts test --coverage",
     "test:watch": "npm run test -- --watchAll"
   },
   "author": "lmarqs",
@@ -24,19 +27,31 @@
   },
   "dependencies": {
     "@vehicle-manager/api": "file:../api",
+    "@webcomponents/webcomponentsjs": "^2.4.1",
+    "axios": "^0.19.0",
+    "bootstrap": "^4.4.1",
+    "lit-element": "^2.2.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
     "@types/faker": "^4.1.9",
-    "@types/helmet": "0.0.45",
     "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.1",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
     "faker": "^4.1.0",
-    "jest": "^25.1.0",
+    "parcel-bundler": "^1.12.4",
+    "stylelint": "^12.0.0",
+    "stylelint-config-standard": "^19.0.0",
     "ts-jest": "^25.2.0",
-    "ts-loader": "^6.2.1",
     "tslint": "^5.20.1",
     "typescript": "^3.7.5"
   },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
   "private": true
 }
