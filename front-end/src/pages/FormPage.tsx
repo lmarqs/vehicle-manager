@@ -87,11 +87,12 @@ export class FormPage extends React.Component<Props, State> {
               value={this.state.numberOfPassengers}
             />
             <vm-input
-              label="Color"
-              hasError={submitted && errors?.color}
               error={errors?.color}
+              hasError={submitted && errors?.color}
+              label="Color"
               onInput={this.handleColorChange}
               type="color"
+              value={this.state.color}
             />
             <div className="form-group">
               <button type="submit" disabled={submitting} className="btn btn-primary">
@@ -115,7 +116,7 @@ export class FormPage extends React.Component<Props, State> {
     try {
       this.setState({ loading: true });
       if (id) {
-        const { body: vehicle } = await apiClient.get(`vehicles/${id}`);
+        const { data: vehicle } = await apiClient.get(`vehicles/${id}`);
         this.setState({ ...vehicle });
       }
       this.setState({ loading: false });
@@ -135,7 +136,7 @@ export class FormPage extends React.Component<Props, State> {
         <>
           <option></option>
           <option value={VehicleType.BUS}>Bus</option>
-          <option value={VehicleType.CAR}>Truck</option>
+          <option value={VehicleType.CAR}>Car</option>
           <option value={VehicleType.TRUCK}>Truck</option>
         </>
       );
@@ -144,7 +145,7 @@ export class FormPage extends React.Component<Props, State> {
   }
 
   private handleChassisNumberChange =
-    (e: any) => this.setState({ chassisNumber: e.currentTarget.value })
+    (e: any) => this.setState({ chassisNumber: parseInt(e.currentTarget.value, 10) })
 
   private handleChassisSeriesChange =
     (e: any) => this.setState({ chassisSeries: e.currentTarget.value })
@@ -164,7 +165,7 @@ export class FormPage extends React.Component<Props, State> {
 
       if (!errors) {
         const response = id
-          ? await apiClient.put(`/vehicles/${id}`, vehicle)
+          ? await apiClient.put(`/vehicles/${id}`, { color: vehicle.color })
           : await apiClient.post("/vehicles", vehicle);
 
         alert("Success");

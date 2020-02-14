@@ -2,50 +2,42 @@ import { createBrowserHistory } from "history";
 import React from "react";
 import { Route, Router, Switch } from "react-router-dom";
 
-import "./App.css";
-
-import { FormPage } from "./pages";
+import { FormPage, ListPage } from "./pages";
 
 export const history = createBrowserHistory();
 
 export class App extends React.Component {
   public render() {
+    const search = new URLSearchParams(location.search);
+    const q = search.get("q");
+
     return (
-      <div className="container">
-        <nav className="navbar navbar-default">
-          <div className="container">
-            <ul className="nav navbar-nav">
-              <li><a href="#">Link</a></li>
-            </ul>
-          </div>
-        </nav>
-        <Router history={history}>
+      <Router history={history}>
+        <div className="container">
+          <nav className="navbar navbar-default">
+            <div className="container">
+              <ul className="nav navbar-nav">
+                <li><a href="/">All Vehicles</a></li>
+                <li><a href="/create">Create a Vehicle</a></li>
+              </ul>
+              <form action="/" method="get" className="navbar-form navbar-left" role="search">
+                <div className="form-group">
+                  <input className="form-control" name="q" defaultValue={q ?? ""} placeholder="Search" autoComplete="off" />
+                </div>
+                <button type="submit" className="btn btn-default">Search</button>
+              </form>
+            </div>
+          </nav>
+
           <div className="col-sm-8 col-sm-offset-2">
             <Switch>
-              <Route exact path="/" component={FormPage} />
+              <Route exact path="/" component={ListPage} />
               <Route exact path="/create" component={FormPage} />
               <Route exact path="/edit/:id" component={FormPage} />
             </Switch>
           </div>
-        </Router>
-      </div>
+        </div>
+      </Router>
     );
   }
 }
-
-// export const App: React.FunctionComponent = () => {
-//   const [value, setValue] = React.useState("");
-//   const onInput = React.useCallback((e) => setValue(e.target.value), [setValue]);
-//   const alert = React.useRef<HTMLElement | null>(null);
-
-//   React.useEffect(() => {
-//     const { current } = alert;
-//     const listener = (e: any) => console.log(e);
-//     current!.addEventListener("dismiss", listener);
-//     ReactDOM.render(<p>children</p>, current!.querySelector("slot"));
-
-//     return () => current!.removeEventListener("dismiss", listener);
-//   }, [alert]);
-
-//   return <vm-alert ref={alert} message="123" type="alert-success" />;
-// };
