@@ -10,12 +10,13 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "prebuild": "rm -rf lib",
+    "prebuild": "rimraf lib",
     "build": "tsc",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "dependencies": {},
   "devDependencies": {
+    "rimraf": "^3.0.2",
     "tslint": "^5.20.0",
     "typescript": "^3.7.4"
   },
