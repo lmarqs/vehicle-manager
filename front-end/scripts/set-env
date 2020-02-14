@@ -11,6 +11,6 @@ const env = ['prod', 'staging', 'dev', 'test'].find(it => process.argv.includes(
 makeSymbolicLink(path.join(dir, 'env', `env.${env}.js`), path.join(dir, 'env', 'index.js'));
 
 function makeSymbolicLink(src, dst) {
-  spawnSync('rm', ['-rf', dst]);
+  spawnSync('npx', ['rimraf', dst]);
   fs.symlinkSync(src, dst);
 }
