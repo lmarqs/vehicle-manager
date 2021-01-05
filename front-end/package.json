@@ -23,7 +23,7 @@
   "dependencies": {
     "@vehicle-manager/api": "file:../api",
     "@webcomponents/webcomponentsjs": "^2.4.1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "history": "^4.10.1",
     "lit-element": "^2.2.1",
